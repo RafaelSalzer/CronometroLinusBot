@@ -1,0 +1,260 @@
+#:kivy 1.11.1
+<MyWidget>:
+    md_bg_color: "#7ac0e2"
+
+    MDBoxLayout:
+        orientation: 'vertical'
+
+        # Barra superior
+        MDBoxLayout:
+            orientation: 'vertical'
+            size: 1920, 10
+            size_hint: None, None  # Desabilita o redimensionamento automático
+            pos_hint: {'top': 1, 'center_x': 0.5}  # Posiciona na borda superior
+            md_bg_color: "#7ac0e2"
+
+        MDBoxLayout:
+            orientation: 'vertical'
+            size: 1920, 7
+            size_hint: None, None  # Desabilita o redimensionamento automático
+            pos_hint: {'top': 1, 'center_x': 0.5}  # Posiciona na borda superior
+            md_bg_color: "#735282"
+
+        MDBoxLayout:
+            #MEXER NESSE ----------------------------------------------
+            orientation: 'horizontal'
+            size: 1920, 100
+            size_hint: None, None  # Desabilita o redimensionamento automático
+            pos_hint: {'top': 1, 'center_x': 0.5}  # Posiciona na borda superior
+            md_bg_color: "#7ac0e2"
+
+            MDLabel:
+                text: "EQUIPE COR: FLU CRAQUE RAFA"
+                id: tituloEquipe
+                halign: "center"
+                valign: "middle"
+                font_size: "70sp"
+                font_name: "Titulo"
+                text_color: "#fcc425"
+
+        MDBoxLayout:
+            orientation: 'vertical'
+            size: 1920, 7
+            size_hint: None, None  # Desabilita o redimensionamento automático
+            pos_hint: {'top': 1, 'center_x': 0.5}  # Posiciona na borda superior
+            md_bg_color: "#735282"
+
+        MDBoxLayout:
+            #MEXER NESSE ----------------------------------------------
+            orientation: 'horizontal'
+            size: 1920, 150
+            size_hint: None, None  # Desabilita o redimensionamento automático
+            pos_hint: {'top': 1, 'center_x': 0.5}  # Posiciona na borda superior
+            md_bg_color: "#7ac0e2"
+
+            MDLabel:
+                text: "Tempo Total:"
+                valign: "center"
+                halign: "center"
+                font_size: "30sp"
+                font_name: "Titulo"
+
+            MDLabel:
+                text: "00:00.000"
+                id: tempoTotal
+                valign: "center"
+                halign: "center"
+                font_size: "80sp"
+                font_name: "Roboto"  # Usando a fonte digital
+
+            MDLabel:
+                text: "Tempo da volta:"
+                valign: "center"
+                halign: "center"
+                font_size: "30sp"
+                font_name: "Titulo"
+
+            MDLabel:
+                text: "00:00.000"
+                id: tempoVolta
+                valign: "center"
+                halign: "center"
+                font_size: "80sp"
+                font_name: "Roboto"
+
+        # Área principal do cronômetro
+        MDBoxLayout:
+            orientation: 'horizontal'
+            md_bg_color: "#7ac0e2"
+            # Este layout vai ocupar o espaço restante automaticamente
+            padding: [10, 10, 10, 10]  # [esquerda, topo, direita, baixo]
+            spacing: 10  # Espaçamento entre os elementos
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                size: 1366, 768  # largura: 1600px, altura: 900px
+                size_hint: None, None  # Desabilita o redimensionamento automático
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}  # Centraliza o layout
+                md_bg_color: "#735282"  # Cor de fundo branca
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                md_bg_color: "#7ac0e2"
+
+                MDLabel:
+                    text: "VOLTAS:"
+                    valign: "top"
+                    halign: "center"
+                    font_size: "40sp"
+                    font_name: "Titulo"
+
+                MDLabel:
+                    text: "volta 1: 00:00.000"
+                    id: volta1
+                    valign: "top"
+                    halign: "center"
+                    font_size: "30sp"
+                    font_name: "Titulo"
+                    opacity: 1
+
+                
+                MDLabel:
+                    text: "volta 2: 00:00.000"
+                    id: volta2
+                    valign: "top"
+                    halign: "center"
+                    font_size: "30sp"
+                    font_name: "Titulo"
+                    opacity: 1
+
+                MDLabel:
+                    text: "volta 3: 00:00.000"
+                    id: volta3
+                    valign: "top"
+                    halign: "center"
+                    font_size: "30sp"
+                    font_name: "Titulo"
+                    opacity: 1
+
+
+                MDLabel:
+                    text: "volta 4: 00:00.000"
+                    id: volta4
+                    valign: "top"
+                    halign: "center"
+                    font_size: "30sp"
+                    font_name: "Titulo"
+                    opacity: 1
+
+                MDLabel:
+                    text: "volta 5: 00:00.000"
+                    id: volta5
+                    valign: "top"
+                    halign: "center"
+                    font_size: "30sp"
+                    font_name: "Titulo"
+                    opacity: 1
+
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    md_bg_color: "#7ac0e2"
+                    height: 400
+                    size_hint_y: None
+                    size_hint_x: 1
+
+                    Image:
+                        source: "images/logolinus.png"  # Caminho para sua imagem   
+                        keep_ratio: True
+
+                    MDBoxLayout:
+                        orientation: 'horizontal'
+                        size_hint_y: None
+                        height: "60dp"  # Aumentei de 50dp para 80dp
+                        md_bg_color: "#735282"
+                        spacing: 5
+                        padding: [5, 5, 5, 5]
+
+                        MDIconButton:
+                            icon: "play"
+                            style: "filled"
+                            id: botaoPlay
+                            on_press: root.iniciar_cronometro()
+                            theme_bg_color: "Custom"
+                            md_bg_color: "#735282"
+                            theme_icon_color: "Custom"
+                            icon_color: "#7ac0e2"
+                            size_hint_x: 1  # Distribui igualmente
+                            pos_hint: {'center_y': 0.5}
+
+                        MDIconButton:
+                            icon: "restart"
+                            style: "filled"
+                            id: botaoRestart
+                            on_press: root.zerar_cronometro_volta()
+                            theme_bg_color: "Custom"
+                            md_bg_color: "#735282"
+                            theme_icon_color: "Custom"
+                            icon_color: "#7ac0e2"
+                            size_hint_x: 1  # Distribui igualmente
+                            pos_hint: {'center_y': 0.5}
+
+                        MDIconButton:
+                            icon: "cancel"
+                            style: "filled"
+                            id: botaoCancelar
+                            on_press: root.zerar_cronometro()  # Chama o método para zerar o cronômetro
+                            theme_bg_color: "Custom"
+                            md_bg_color: "#735282"
+                            theme_icon_color: "Custom"
+                            icon_color: "#7ac0e2"
+                            size_hint_x: 1  # Distribui igualmente
+                            pos_hint: {'center_y': 0.5}
+
+                        MDIconButton:
+                            icon: "arrow-left"
+                            style: "filled"
+                            id: botaoEsquerda
+                            theme_bg_color: "Custom"
+                            md_bg_color: "#735282"
+                            theme_icon_color: "Custom"
+                            icon_color: "#7ac0e2"
+                            size_hint_x: 1  # Distribui igualmente
+                            pos_hint: {'center_y': 0.5}
+                            on_press: root.selecionar_equipe_esquerda()  # Chama o método para selecionar a equipe à esquerda
+
+                        MDIconButton:
+                            icon: "home"
+                            style: "filled"
+                            theme_bg_color: "Custom"
+                            md_bg_color: "#735282"
+                            theme_icon_color: "Custom"
+                            icon_color: "#7ac0e2"
+                            size_hint_x: 1  # Distribui igualmente
+                            pos_hint: {'center_y': 0.5}
+                        
+                        MDIconButton:
+                            icon: "arrow-right"
+                            style: "filled"
+                            id: botaoDireita
+                            theme_bg_color: "Custom"
+                            md_bg_color: "#735282"
+                            theme_icon_color: "Custom"
+                            icon_color: "#7ac0e2"
+                            size_hint_x: 1  # Distribui igualmente
+                            pos_hint: {'center_y': 0.5}
+                            on_press: root.selecionar_equipe_direita()  # Chama o método para selecionar a equipe à direita
+
+                        
+
+
+        # Barra inferior (opcional)
+        #MDBoxLayout:
+            #orientation: 'horizontal'
+            #size_hint_y: None
+            #height: 100
+            #md_bg_color: "#735282"
+
+        #MDBoxLayout:
+            #size: 1366, 768  # largura: 1600px, altura: 900px
+            #size_hint: None, None  # Desabilita o redimensionamento automático
+            #md_bg_color: "#735282"  # Cor de fundo azul
