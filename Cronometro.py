@@ -32,7 +32,7 @@ class Cronometro:
         self.pausar_cronometro()
         self.tempo_inicial = 0
         self.tempo_pausado = 0
-        print("zerei aqui")
+        #print("zerei aqui")
     
     def obter_tempo_atual(self):
         """Retorna o tempo atual em segundos"""

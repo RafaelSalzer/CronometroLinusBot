@@ -100,6 +100,8 @@
             MDBoxLayout:
                 orientation: 'vertical'
                 md_bg_color: "#7ac0e2"
+                padding: [0, 0, 0, 10]
+
 
                 MDLabel:
                     text: "VOLTAS:"
@@ -174,17 +176,17 @@
                         spacing: 5
                         padding: [5, 5, 5, 5]
 
-                        MDIconButton:
-                            icon: "play"
-                            style: "filled"
-                            id: botaoPlay
-                            on_press: root.iniciar_cronometro()
-                            theme_bg_color: "Custom"
-                            md_bg_color: "#735282"
-                            theme_icon_color: "Custom"
-                            icon_color: "#7ac0e2"
-                            size_hint_x: 1  # Distribui igualmente
-                            pos_hint: {'center_y': 0.5}
+                        #MDIconButton:
+                            #icon: "play"
+                            #style: "filled"
+                            #id: botaoPlay
+                            #on_press: root.iniciar_cronometro()
+                            #theme_bg_color: "Custom"
+                            #md_bg_color: "#735282"
+                            #theme_icon_color: "Custom"
+                            #icon_color: "#7ac0e2"
+                            #size_hint_x: 1  # Distribui igualmente
+                            #pos_hint: {'center_y': 0.5}
 
                         MDIconButton:
                             icon: "restart"
@@ -225,6 +227,7 @@
                         MDIconButton:
                             icon: "home"
                             style: "filled"
+                            id: botaoCasa
                             theme_bg_color: "Custom"
                             md_bg_color: "#735282"
                             theme_icon_color: "Custom"

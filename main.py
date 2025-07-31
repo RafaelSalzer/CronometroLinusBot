@@ -26,6 +26,7 @@ class MyWidget(MDScreen):
         self.volta = 1
         self.inicio = True
         self.ws = None
+        self.ultimaVolta = False
         # Inicializar WebSocket após a interface estar pronta
         Clock.schedule_once(self.iniciar_websocket, 0.1)  
         Clock.schedule_once(self.configurar_interface, 0.05)
@@ -40,43 +41,92 @@ class MyWidget(MDScreen):
         """Inicializa a conexão WebSocket com o ESP32"""
         
         def on_message(ws, message):
-            print(f"Mensagem recebida: {message}")
-            if message == "Passou" and self.inicio:
+            #print(f"Mensagem recebida: {message}")
+            if message == "Passou" and self.inicio and not self.ultimaVolta:
                 self.inicio = False
                 self.cronometroTempoVolta.iniciar()
                 self.eventoTextoTempoVolta = Clock.schedule_interval(self.altera_texto_tempo_volta, 0.01)
+                self.iniciar_cronometro()
             elif message == "Passou" and not self.inicio:
-            
+
                 if self.volta == 1:
                     self.ids.volta1.text = f"volta {self.volta}: {self.cronometroTempoVolta.obter_tempo_formatado()}"
+                    self.equipes[self.selecionar].voltas.append(self.cronometroTempoVolta.obter_tempo_formatado())
                     self.volta += 1
                     #self.ids.volta1.opacity = 1
                 
                 elif self.volta == 2:
                     self.ids.volta2.text = f"volta {self.volta}: {self.cronometroTempoVolta.obter_tempo_formatado()}"
+                    self.equipes[self.selecionar].voltas.append(self.cronometroTempoVolta.obter_tempo_formatado())
                     self.volta += 1
                     #self.ids.volta2.opacity = 1
 
                 elif self.volta == 3:
                     self.ids.volta3.text = f"volta {self.volta}: {self.cronometroTempoVolta.obter_tempo_formatado()}"
+                    self.equipes[self.selecionar].voltas.append(self.cronometroTempoVolta.obter_tempo_formatado())
                     self.volta += 1
                     #self.ids.volta3.opacity = 1
 
                 elif self.volta == 4:
                     self.ids.volta4.text = f"volta {self.volta}: {self.cronometroTempoVolta.obter_tempo_formatado()}"
+                    self.equipes[self.selecionar].voltas.append(self.cronometroTempoVolta.obter_tempo_formatado())
                     self.volta += 1
                     #self.ids.volta4.opacity = 1
 
                 elif self.volta == 5:
                     self.ids.volta5.text = f"volta {self.volta}: {self.cronometroTempoVolta.obter_tempo_formatado()}"
+                    self.equipes[self.selecionar].voltas.append(self.cronometroTempoVolta.obter_tempo_formatado())
                     self.volta += 1
                     #self.ids.volta5.opacity = 1
-
                 
-                # Para o cronômetro da volta
-                self.cronometroTempoVolta.zerar_cronometro()
-                self.cronometroTempoVolta.iniciar()
-                self.eventoTextoTempoVolta = Clock.schedule_interval(self.altera_texto_tempo_volta, 0.01)
+                elif self.volta == 6:
+                    self.ids.volta1.text = f"volta {self.volta}: {self.cronometroTempoVolta.obter_tempo_formatado()}"
+                    self.equipes[self.selecionar].voltas.append(self.cronometroTempoVolta.obter_tempo_formatado())
+                    self.volta += 1
+                    #self.ids.volta1.opacity = 1
+                
+                elif self.volta == 7:
+                    self.ids.volta2.text = f"volta {self.volta}: {self.cronometroTempoVolta.obter_tempo_formatado()}"
+                    self.equipes[self.selecionar].voltas.append(self.cronometroTempoVolta.obter_tempo_formatado())
+                    self.volta += 1
+                    #self.ids.volta2.opacity = 1
+                    
+                elif self.volta == 8:
+                    self.ids.volta3.text = f"volta {self.volta}: {self.cronometroTempoVolta.obter_tempo_formatado()}"
+                    self.equipes[self.selecionar].voltas.append(self.cronometroTempoVolta.obter_tempo_formatado())
+                    self.volta += 1
+                    #self.ids.volta3.opacity = 1
+                    
+                elif self.volta == 9:
+                    self.ids.volta4.text = f"volta {self.volta}: {self.cronometroTempoVolta.obter_tempo_formatado()}"
+                    self.equipes[self.selecionar].voltas.append(self.cronometroTempoVolta.obter_tempo_formatado())
+                    self.volta += 1
+                    #self.ids.volta4.opacity = 1
+                    
+                elif self.volta == 10:
+                    self.ids.volta5.text = f"volta {self.volta}: {self.cronometroTempoVolta.obter_tempo_formatado()}"
+                    self.equipes[self.selecionar].voltas.append(self.cronometroTempoVolta.obter_tempo_formatado())
+                    self.volta += 1
+                    #self.ids.volta5.opacity = 1
+                
+                if self.ultimaVolta:
+                    """Essa é a última parte da corrida de cada equipe
+                    """
+                    if self.eventoTextoTempoVolta is not None:
+                        self.zerar_cronometro_volta()
+                        self.inicio = False
+                    print(f"Voltas da equipe {self.equipes[self.selecionar].nome}: {self.equipes[self.selecionar].voltas}")
+                    #self.ultimaVolta = False
+                    #self.inicio = True
+                    #self.volta = 1
+                    self.ids.botaoEsquerda.disabled = False
+                    self.ids.botaoDireita.disabled = False
+                    self.ids.botaoCasa.disabled = False
+                else:
+                    # Para o cronômetro da volta
+                    self.cronometroTempoVolta.zerar_cronometro()
+                    self.cronometroTempoVolta.iniciar()
+                    self.eventoTextoTempoVolta = Clock.schedule_interval(self.altera_texto_tempo_volta, 0.01)
 
         def on_error(ws, error):
             print(f"Erro WebSocket: {error}")
@@ -109,22 +159,41 @@ class MyWidget(MDScreen):
                 
             
     def selecionar_equipe_direita(self):
+        self.zerar_cronometro()
+        self.ultimaVolta = False
+        self.inicio = True
+        self.volta = 1
         self.selecionar += 1
         if self.selecionar >= len(self.equipes):
             self.selecionar = 0
         self.ids.tituloEquipe.text = self.equipes[self.selecionar].exibeTitulo()
-        
+        self.ids.volta1.text = "volta 1: 00:00.000"
+        self.ids.volta2.text = "volta 2: 00:00.000"
+        self.ids.volta3.text = "volta 3: 00:00.000"
+        self.ids.volta4.text = "volta 4: 00:00.000"
+        self.ids.volta5.text = "volta 5: 00:00.000"
+
     def selecionar_equipe_esquerda(self):
+        self.zerar_cronometro()
+        self.ultimaVolta = False
+        self.inicio = True
+        self.volta = 1
         self.selecionar -= 1
         if self.selecionar < 0:
             self.selecionar = len(self.equipes) - 1
         self.ids.tituloEquipe.text = self.equipes[self.selecionar].exibeTitulo()
+        self.ids.volta1.text = "volta 1: 00:00.000"
+        self.ids.volta2.text = "volta 2: 00:00.000"
+        self.ids.volta3.text = "volta 3: 00:00.000"
+        self.ids.volta4.text = "volta 4: 00:00.000"
+        self.ids.volta5.text = "volta 5: 00:00.000"
 
     def iniciar_cronometro(self):
         self.cronometroTempoTotal.iniciar()
         self.eventoTextoTempoTotal = Clock.schedule_interval(self.altera_texto_tempo_total, 0.01)
         self.ids.botaoEsquerda.disabled = True
         self.ids.botaoDireita.disabled = True
+        self.ids.botaoCasa.disabled = True
 
     def altera_texto_tempo_total(self, dt):
         tempo = self.cronometroTempoTotal.obter_tempo_atual()
@@ -133,9 +202,11 @@ class MyWidget(MDScreen):
 
         if tempo >= 180:  ## ta dando um erreinho de alguns milisegundos, mas a logica funciona
             self.cronometroTempoTotal.pausar_cronometro()
+            self.ultimaVolta = True
             if getattr(self, 'eventoTextoTempoTotal', None):
                 self.eventoTextoTempoTotal.cancel()
                 self.eventoTextoTempoTotal = None
+            self.ids.tempoTotal.text = "03:00.000"
 
     
                 
@@ -145,12 +216,21 @@ class MyWidget(MDScreen):
     def zerar_cronometro(self):
         self.cronometroTempoTotal.zerar_cronometro()
         self.ids.tempoTotal.text = "00:00.000"
-        #self.ids.
+        self.ids.volta1.text = "volta 1: 00:00.000"
+        self.ids.volta2.text = "volta 2: 00:00.000"
+        self.ids.volta3.text = "volta 3: 00:00.000"
+        self.ids.volta4.text = "volta 4: 00:00.000"
+        self.ids.volta5.text = "volta 5: 00:00.000"
+        self.equipes[self.selecionar].voltas = []
+        self.inicio = True
+        self.volta = 1
+        self.ultimaVolta = False
         if self.eventoTextoTempoTotal:
             self.eventoTextoTempoTotal.cancel()
             self.eventoTextoTempoTotal = None
         self.ids.botaoEsquerda.disabled = False
         self.ids.botaoDireita.disabled = False
+        self.ids.botaoCasa.disabled = False
         if self.eventoTextoTempoVolta is not None:
             self.zerar_cronometro_volta()
 
